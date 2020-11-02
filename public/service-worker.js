@@ -13,6 +13,7 @@ const FILES_TO_CACHE = [
 
 //install
 self.addEventListener("install", (event) => {
+  console.log("********* Install **********")
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -23,6 +24,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  console.log("********* Active **********")
   event.waitUntil(
     caches.keys().then(keyList => {
       return Promise.all(
