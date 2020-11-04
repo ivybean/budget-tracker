@@ -1,6 +1,3 @@
-const { get } = require("mongoose");
-const { response } = require("express");
-
 let db;
 const request = indexedDB.open("budget", 1);
 
@@ -10,7 +7,7 @@ request.onupgradeneeded = (e) => {
 };
 
 request.oneerror = (e) => {
-  console.lot("There was an error");
+  console.log("There was an error");
 };
 
 request.onsuccess = (e) => {
