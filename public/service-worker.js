@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
 
@@ -43,13 +41,14 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  console.log('Intercepting fetch requests: ', event);
   if (event.request.url.includes("/api")) {
     event.respondWith(
       caches.open(DATA_CACHE_NAME).then(cache => {
         return fetch(event.request)
         .then(response => {
           if (response.status === 200) {
-            cache.put(evt.request.url, response.clone());
+            cache.put(event.request.url, response.clone());
           }
           return response;
         })
@@ -64,7 +63,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request)
     .then((response) => {
-      return response || fetch(evt.request);
+      return response || fetch(event.request);
     })
   );
 });
